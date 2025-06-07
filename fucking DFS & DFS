@@ -1,0 +1,51 @@
+#include <stdio.h>
+#define RANGE 1001
+
+void DFS(int arr[][1001],int v,int max){
+    printf("%d ",v);
+    for(int j=0;j<max;j++){
+            arr[j][v]=0;
+        }
+    for(int i=0;i<max;i++){
+        if(arr[v][i]==1){
+            DFS(arr,i,max);
+        }
+    }
+}
+
+void BFS(int arr[][1001],int v,int max){
+    int queue[1001];
+    int q_start=-1
+    int q_end=-1;
+    printf("%d ",v);
+    
+    for(int i=0;i<max;i++){
+        
+    }
+}
+
+int main() {
+    int graph[RANGE][RANGE];
+    int n,m,v;
+    int input1;
+    int input2;
+    
+    for(int i=0;i<RANGE;i++){
+        for(int j=0;j<RANGE;j++){
+            graph[i][j]=0;
+        }
+    }
+    
+    scanf("%d %d %d",&n,&m,&v);
+
+    for(int i=0;i<m;i++){
+        scanf("%d %d",&input1,&input2);
+        graph[input1][input2]=1;
+        graph[input2][input1]=1;
+    }
+    
+    
+    DFS(graph,v,n+1);
+    
+    return 0;
+}
