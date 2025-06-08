@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int n,m;
+int result[1001]={0,};
+int check[1001]={0,};
+
+int dfs(int d,int c){
+    if(d==m){
+        for(int i=0;i<m;i++){
+            printf("%d ",result[i]);
+        }
+        printf("\n");
+    }
+    else{
+        for(int i=1;i<=n;i++){
+            if(check[i]==0&&c<i){
+                result[d]=i;
+                check[i]=1;
+                dfs(d+1,i);
+                check[i]=0;
+            }
+        }
+    }
+}
+
+int main() {
+        
+    scanf("%d %d",&n,&m);
+    dfs(0,0);
+
+    
+    return 0;
+}
