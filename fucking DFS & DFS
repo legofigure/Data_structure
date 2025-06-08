@@ -1,10 +1,12 @@
 #include <stdio.h>
 #define RANGE 1001
 
+int queue[1001];
+
 void DFS(int arr[][1001],int v,int max){
     printf("%d ",v);
-    for(int j=0;j<max;j++){
-            arr[j][v]=0;
+    for(int i=0;i<max;i++){
+            arr[i][v]=0;
         }
     for(int i=0;i<max;i++){
         if(arr[v][i]==1){
@@ -14,25 +16,43 @@ void DFS(int arr[][1001],int v,int max){
 }
 
 void BFS(int arr[][1001],int v,int max){
-    int queue[1001];
-    int q_start=-1
-    int q_end=-1;
-    printf("%d ",v);
+    int start=0;
+    int end=0;
+
+    queue[start]=v;
     
     for(int i=0;i<max;i++){
-        
+        arr[i][v]=0;
+    }
+    while(start <= end){
+        for(int i=0;i<max;i++){
+            if(arr[queue[start]][i]==1){
+                queue[++end]=i;
+                for(int j=0;j<max;j++){
+                    arr[j][i]=0;
+                }
+            }
+        }
+        start++;
+    }
+
+    
+    for(int i=0;i<=end;i++){
+        printf("%d ",queue[i]);
     }
 }
 
 int main() {
-    int graph[RANGE][RANGE];
+    int DFS_graph[RANGE][RANGE];
+    int BFS_graph[RANGE][RANGE];
     int n,m,v;
     int input1;
     int input2;
     
     for(int i=0;i<RANGE;i++){
         for(int j=0;j<RANGE;j++){
-            graph[i][j]=0;
+            DFS_graph[i][j]=0;
+            BFS_graph[i][j]=0;
         }
     }
     
@@ -40,12 +60,16 @@ int main() {
 
     for(int i=0;i<m;i++){
         scanf("%d %d",&input1,&input2);
-        graph[input1][input2]=1;
-        graph[input2][input1]=1;
+        DFS_graph[input1][input2]=1;
+        DFS_graph[input2][input1]=1;
+        BFS_graph[input1][input2]=1;
+        BFS_graph[input2][input1]=1;
     }
     
     
-    DFS(graph,v,n+1);
+    DFS(DFS_graph,v,n+1);
+    printf("\n");
+    BFS(BFS_graph,v,n+1);
     
     return 0;
 }
