@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+int q[10001][2] = {0, };
+
+void find(int arr[][101],int n,int m){
+    int dx[4] = {-1, 1, 0, 0};
+    int dy[4] = {0, 0, -1, 1};
+    int x,y;
+    int nx,ny;
+    int start,end;
+
+    start=0;
+    end=0;
+    q[start][0]=1;
+    q[start][1]=1;
+    end++;
+    
+    while(start<end){
+        x=q[start][0];
+        y=q[start][1];
+        start++;
+            
+        for(int i=0;i<4;i++){
+            nx=x+dx[i];
+            ny=y+dy[i];
+            if(nx<1 || ny<1 || nx>n || ny>m){
+                continue;
+            }
+            if(arr[nx][ny] != 1)
+                continue;
+            arr[nx][ny]=arr[x][y]+1;
+            
+            q[end][0]=nx;
+            q[end][1]=ny;
+            end++;
+        }
+    }
+    
+    
+    }
+
+int main() {
+    int maze[101][101] = {0, };
+    int n,m;
+
+    int ans=0;
+    scanf("%d %d",&n,&m);
+    
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            scanf("%1d",&maze[i][j]);
+        }
+    }
+    
+    find(maze,n,m);
+
+    ans=maze[n][m];
+    
+    printf("%d",ans);
+    
+    return 0;
+}
