@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+
+char stack[101];
+
+char prefix[101];
+
+int len;
+int start=-1;
+
+int signNum(char a){
+    switch(a){
+        case '(': case ')': return 0;
+
+        case '+' : case'-': return 1;
+
+        case '*' : case'/': return 2;
+    }
+    return -1;
+}
+
+void push(char a){
+    stack[++start]=a;
+}
+
+char pop(){
+    return stack[start--];
+}
+
+char check_pop(){
+    return stack[start];
+}
+
+int is_empty(){
+    if(start==-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void prefix_to_postfix(){
+    char ch;
+    char top;
+    
+    for(int i=0;i<len;i++){
+        ch = prefix[i];
+        switch(ch){
+        case '+': case '-': case '*': case '/':
+            while(!is_empty()&&signNum(ch)<=signNum(check_pop())){
+                printf("%c",pop());
+            }
+            push(ch);
+            break;
+        case '(':
+            push(ch);
+            break;
+        case ')':
+            top=pop();
+            while(top!='('){
+                printf("%c",top);
+                top=pop();
+            }
+            break;
+        default:
+            printf("%c",ch);
+            break;
+        }
+    }
+    while(!is_empty()){
+        printf("%c",pop());
+    }
+}
+
+
+int main(){
+    scanf("%s",prefix);
+    len=strlen(prefix);
+    prefix_to_postfix();
+    
+    return 0;
+}
