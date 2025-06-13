@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int main() {
+    int T;
+    int N,K;
+    int D[1001];
+    int apt[1001][1001];
+    int X,Y;
+    int W;
+
+    scanf("%d",&T);
+    for(int i=0;i<T;i++){
+        scanf("%d %d",&N,&K);
+        for(int j=1;j<=N;j++){
+            scanf("%d",&D[j]);
+        }
+
+        for(int k=1;k<=K;k++){
+            scanf("%d %d",&X,&Y);
+            apt[X][Y]=D[Y];
+        }
+        scanf("%d",&W);
+    }
+    for(int i=1;i<=N;i++){
+        for(int j=1;j<=N;j++){
+            printf("%d ",apt[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
