@@ -1,5 +1,14 @@
 #include <stdio.h>
 
+long Min(long a,long b){
+    if(a<b){
+        return a;
+    }
+    else{
+        return b;
+    }
+}
+
 int main() {
     long long N;
     long long score[6];
@@ -12,37 +21,48 @@ int main() {
     for(int i=0;i<6;i++){
         scanf("%lld",&score[i]);
     }
-
-    for(int i=0;i<6;i++){
-        min=i;
-        for(int j=i+1;j<6;j++){
-            if(score[j]<score[min]){
-                min=j;
-            }
-        }
-        temp=score[i];
-        score[i]=score[min];
-        score[min]=temp;
-    }
-
+    
     if(N==1){
+        for(int i=0;i<6;i++){
+        min=i;
+            for(int j=i+1;j<6;j++){
+                if(score[j]<score[min]){
+                    min=j;
+                }
+            }
+            temp=score[i];
+            score[i]=score[min];
+            score[min]=temp;
+        }
         for(int i=0;i<5;i++){
             ans+=score[i];
         }
         printf("%lld",ans);
     }
     else{
-        for(int i=0;i<3;i++){
-            side3+=score[i];
-        }
-        side3*=4;
-
-        for(int i=0;i<2;i++){
-            side2+=score[i];
+        side3=500;      
+        side2=500;
+        side1=500;
+        for(int i=0;i<6;i++){
+            side1=Min(score[i],side1);
+            for(int j=i+1;j<6;j++){
+                if(i+j==5){
+                    continue;
+                }
+                else{
+                    side2=Min(score[i]+score[j],side2);
+                }
+                for(int k=j+1;k<6;k++){
+                    if(i+j==5 || i+k==5 || j+k==5){
+                        continue;
+                    }
+                    side3=Min(score[i]+score[j]+score[k],side3);
+                }
+            }
         }
         side2*=(8*N-12);
-        
-        side1=score[0]*((5*N-6)*(N-2));
+        side3*=4;
+        side1*=((5*N-6)*(N-2));
         
         ans=side3+side2+side1;
         printf("%lld",ans);
