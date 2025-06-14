@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 int D[1001]={0,};
+int in[1001]={0,};
 int apt[1001][1001]={0,};
-int in_out[1001][2]={0,};
 int dp[1001][1001]={0,};
 int N,K,W;
 
@@ -15,28 +15,26 @@ int Max(int a,int b){
     }
 }
 
-void inout(){
+void In(){
     for(int i=1;i<=N;i++){
         for(int j=1;j<=N;j++){
-            in_out[i][0]+=apt[j][i]; //in
-            in_out[i][1]+=apt[i][j]; //out
+            in[i]+=apt[j][i];
         }
     }
 }
 
-void DFS(int from,int to,int time){
-
+void DFS(int to,int time){
+    int check=0;
+    
     for(int i=1;i<=N;i++){
-        if(apt[from][i]==1){
-            dp[from][i]=D[from]+time;
-            if(in_out[i][0]>1){
-                
-            }
-            else{
-                DFS(i,to,dp[from][i]);
-            }
-            
+        if(apt[i][to]==1){
+            dp[i][to]=D[to]+time;
+            check=1;
+            DFS(i,dp[i][to]);
         }
+    }
+    if(check==0){
+        dp[to][to]=Max(dp[to][to],D[to]+time);
     }
     
 }
@@ -48,8 +46,16 @@ int main() {
     
     scanf("%d",&T);
     for(int i=0;i<T;i++){
-        ans=0;
         scanf("%d %d",&N,&K);
+        ans=0;
+        for(int j=1;j<=N;j++){
+            D[j]=0;
+            in[j]=0;
+            for(int k=1;k<=N;k++){
+                apt[j][k]=0;
+                dp[j][k]=0;
+            }
+        }
         for(int j=1;j<=N;j++){
             scanf("%d",&D[j]);
         }
@@ -59,20 +65,18 @@ int main() {
             apt[X][Y]=1;
         }
         scanf("%d",&W);
-        inout();
-        
+        In();
+
+        DFS(W,0);
+
         for(int j=1;j<=N;j++){
-            if(in_out[j][0]==0){
-                DFS(j,W,0);
+            if(in[j]==0){
+                for(int k=1;k<=N;k++){
+                    ans=Max(dp[k][j],ans);
+                }
             }
         }
-
-        for(int j=1;j<=N;j++){
-            ans=Max(ans,dp[j][W]+D[W]);
-        }
-
-        printf("%d",ans);
-        
+        printf("%d\n",ans);
     }
     
 
