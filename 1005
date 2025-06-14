@@ -1,13 +1,45 @@
 #include <stdio.h>
 
+int D[1001]={0,};
+int apt[1001][1001]={0,};
+int dp1[1001]={0,};
+int dp2[1001]={0,};
+int N,K,W;
+
+int Max(int a,int b){
+    if(a>b){
+        return a;
+    }
+    else{
+        return b;
+    }
+}
+
+int DFS(int depth,int w){
+    int check=0;
+    int temp;
+    
+    for(int i=1;i<=N;i++){
+        if(apt[i][w]==1){
+            dp1[depth++]=D[i];
+            DFS(depth,i);
+            check=1;
+        }
+    }
+
+    if(check==0){
+        temp=0;
+        for(int i=0;i<=depth;i++){
+            dp2[depth]+=dp1[i];
+        }
+        dp2[depth]=Max(dp2[depth],)
+    }
+}
+
 int main() {
     int T;
-    int N,K;
-    int D[1001];
-    int apt[1001][1001];
     int X,Y;
-    int W;
-
+    
     scanf("%d",&T);
     for(int i=0;i<T;i++){
         scanf("%d %d",&N,&K);
@@ -17,7 +49,7 @@ int main() {
 
         for(int k=1;k<=K;k++){
             scanf("%d %d",&X,&Y);
-            apt[X][Y]=D[Y];
+            apt[X][Y]=1;
         }
         scanf("%d",&W);
     }
