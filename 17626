@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 
 int Min(int a,int b){
     if(a<b){
@@ -12,27 +11,25 @@ int Min(int a,int b){
 
 int main() {
     int n;
-    int dp[50001];
+    int dp[50001]={0,};
     
     dp[0]=0;
     dp[1]=1;
     
     scanf("%d",&n);
-    for(int i=1;i<224;i++)
+    for(int i=2;i<224;i++)
 		dp[i*i]=1;
     
-    for(int i=2;i<=50000;i++){
+    for(int i=2;i<=n;i++){
         if(dp[i]!=1){
             dp[i]=4;
-            for(int j=1;j<=sqrt(i);j++){
-                dp[i]=Min(dp[i],dp[j*j]+dp[i-j*j]);
+            for(int j=1;j*j<=i;j++){
+                dp[i]=Min(dp[i],1+dp[i-j*j]);
             }
         }
     }
     
     printf("%d",dp[n]);
 
-
-    
     return 0;
 }
