@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int n;
+char arr[6144][3073]={0,};
+
+void star(int len,int row, int col){
+    arr[row][col]='*';
+    arr[row+1][col]='*';
+    arr[row+1][col+2]='*';
+    for(int i=0;i<5;i++){
+        arr[row+2][col+i]='*';
+    }
+    star(len,row+2,col);
+}
+
+int main(void){
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=2*i-1;j++){
+            arr[i][j]=' ';
+        }
+    }
+    star(n,1,1);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n-i;j++){
+            printf(" ");
+        }
+        for(int j=1;j<=2*i-1;j++){
+            printf("%c",arr[i][j]);
+        }
+        printf("\n");        
+    }
+
+
+
+    return 0;
+}
