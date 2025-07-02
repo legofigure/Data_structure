@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int depth=0;
+int find=0;
+long long a,b;
+
+void DFS(long long a){
+    depth++;
+    if(a==b){
+        find=1;
+        printf("%d",depth);
+        return;
+    }
+    else if(a>b){
+        return;
+    }
+    else{
+        DFS(a*2);
+        depth--;
+        DFS(a*10+1);
+        depth--;
+    }
+}
+
+int main(){
+    scanf("%lld %lld",&a,&b);
+    DFS(a);
+    if(find==0){
+        printf("-1");
+    }
+    return 0;
+}
