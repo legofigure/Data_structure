@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int arr[500001];
+    int temp;
+    int stack[500001];
+    int end=0;
+    
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+        scanf("%d",&arr[i]);
+    }
+
+    for(int i=n;i>0;i--){
+        temp=0;
+        for(int j=i-1;j>0;j--){
+            if(arr[j]>arr[i]){
+                temp=j;
+                break;
+            }
+        }
+        stack[end++]=temp;
+    }
+    end--;
+    for(int i=end;i>=0;i--){
+        printf("%d ",stack[i]);
+    }
+    
+    return 0;
+}
