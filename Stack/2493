@@ -26,19 +26,44 @@ int top(Stack *s){
     return s->stack[s->top];
 }
 
+int index_top(Stack *s){
+    return s->index[s->top];
+}
+
 int empty(Stack *s){
     return (s->top == -1);
 }
 
 
 int main() {    
+    Stack t;
+    init(&t);
     scanf("%d",&n);
     for(int i=1;i<=n;i++){
         scanf("%d",&arr[i]);
     }
 
     for(int i=1;i<=n;i++){
-        
+        if(empty(&t)){
+            push(&t,arr[i],i);
+            printf("0 ");
+        }
+        else{
+            while(empty(&t)==0){
+                if(top(&t)>arr[i]){
+                    printf("%d ",index_top(&t));
+                    push(&t,arr[i],i);
+                    break;
+                }
+                else{
+                    pop(&t);
+                }
+            }
+            if(empty(&t)){
+                push(&t,arr[i],i);
+                printf("0 ");
+            }
+        }
     }
     
     return 0;
