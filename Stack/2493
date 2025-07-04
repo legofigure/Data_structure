@@ -44,27 +44,22 @@ int main() {
     }
 
     for(int i=1;i<=n;i++){
+        while(empty(&t)==0){
+            if(top(&t)>arr[i]){
+                printf("%d ",index_top(&t));
+                push(&t,arr[i],i);
+                break;
+            }
+            else{
+                pop(&t);
+            }
+        }
         if(empty(&t)){
             push(&t,arr[i],i);
             printf("0 ");
         }
-        else{
-            while(empty(&t)==0){
-                if(top(&t)>arr[i]){
-                    printf("%d ",index_top(&t));
-                    push(&t,arr[i],i);
-                    break;
-                }
-                else{
-                    pop(&t);
-                }
-            }
-            if(empty(&t)){
-                push(&t,arr[i],i);
-                printf("0 ");
-            }
-        }
     }
+
     
     return 0;
 }
