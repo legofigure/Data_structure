@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+int t(int a){
+    if(a==0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int Max(int a,int b){
+    if(a>b){
+        return a;
+    }
+    else{
+        return b;
+    }
+}
+
+int main(){
+    int T;
+    int n,temp;
+    int a,b,k;
+    int arr[2][100001]={0,};
+    int dp[2][100001]={0,};
+    
+    scanf("%d",&T);
+    
+    for(int i=0;i<T;i++){
+        scanf("%d",&n);
+        for(int j=1;j<=n;j++){
+            scanf("%d",&arr[0][j]);
+        }
+        for(int j=1;j<=n;j++){
+            scanf("%d",&arr[1][j]);
+        }
+        
+        for(int j=0;j<2;j++){
+            temp=j;
+            a=arr[temp][1]+arr[t(temp)][2]+arr[temp][3];
+            b=arr[temp][1]+arr[t(temp)][3];
+            if(a>=b){
+                dp[j][3]=a;
+                temp=t(temp);
+            }
+            else{
+                dp[j][3]=b;
+            }
+            k=4;
+            while(dp[j][n]==0){
+                a=dp[j][k-1]+arr[t(temp)][k]+arr[temp][k+1];
+                b=dp[j][k-1]+arr[t(temp)][k+1];
+                if(a>=b){
+                    dp[j][k]=dp[j][k-1]+arr[t(temp)][k];
+                    dp[j][k+1]=dp[j][k-1]+arr[t(temp)][k]+arr[temp][k+1];
+                }
+                else{
+                    dp[j][k]=dp[j][k-1];
+                    dp[j][k+1]=dp[j][k-1]+arr[t(temp)][k+1];
+                }
+                k+=2;
+            }
+        }
+        
+        
+        for(int j=1;j<=n;j++){
+            printf("%d\n",dp[0][j]);
+        }
+    }
+    
+    return 0;
+}
