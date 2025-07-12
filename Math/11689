@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    long long n,e;
+    scanf("%lld",&n);
+    e=n;
+    for(long long p=2;p*p<=n;p++){
+        if(n%p==0){
+            e=e/p*(p-1);
+        }
+        while(n%p==0){
+            n/=p;
+        }
+    }
+
+    if(n==1){
+        printf("%lld",e);
+    }
+    else{
+        printf("%lld",e/n*(n-1));
+    }
+    
+    return 0;
+}
